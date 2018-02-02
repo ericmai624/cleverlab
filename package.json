@@ -7,21 +7,39 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "node api/",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "apollo-client-preset": "^1.0.8",
+    "body-parser": "^1.18.2",
+    "chalk": "^2.3.0",
+    "express": "^4.16.2",
+    "glob": "^7.1.2",
+    "graphql": "^0.12.3",
+    "graphql-tag": "^2.6.1",
+    "morgan": "^1.9.0",
     "next": "^4.2.3",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
+    "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
     "redux": "^3.7.2",
     "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
     "styled-components": "^3.1.5"
   },
   "devDependencies": {
+    "autoprefixer": "^7.2.5",
     "babel-eslint": "^8.2.1",
-    "eslint": "^4.16.0"
+    "babel-loader": "^7.1.2",
+    "babel-plugin-module-resolver": "^3.0.0",
+    "babel-plugin-styled-components": "^1.5.0",
+    "babel-plugin-wrap-in-js": "^1.1.1",
+    "eslint": "^4.16.0",
+    "postcss-font-magician": "^2.1.0",
+    "postcss-loader": "^2.1.0",
+    "raw-loader": "^0.5.1"
   }
 }
