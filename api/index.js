@@ -5,6 +5,7 @@ const server = require('http').Server(app);
 const io = require('./io')(server);
 
 const middleware = require('./middleware');
+const db = require('../database');
 
 const port = process.env.PORT || 8080;
 const dev = process.env.NODE_ENV !== 'production';
