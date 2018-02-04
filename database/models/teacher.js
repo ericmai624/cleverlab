@@ -1,4 +1,4 @@
-module.exports = (db, DataTypes) => {
+export default (db, DataTypes) => {
   const { ARRAY, STRING, INTEGER, DATE } = DataTypes;
 
   return db.define('Teacher', 

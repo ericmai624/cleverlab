@@ -1,5 +1,4 @@
 module.exports = models => {
-  console.log('setting relations among models');
   const { Student, Teacher, Class } = models;
 
   Class.belongsToMany(Student, { through: 'Class_Student' });

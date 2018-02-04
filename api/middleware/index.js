@@ -1,2 +1,2 @@
-module.exports.morgan = require('morgan');
-module.exports.bodyParser = require('body-parser');
+export { default as morgan } from 'morgan';
+export { default as bodyParser } from 'body-parser';

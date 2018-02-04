@@ -1,0 +1,35 @@
+{
+  "development": {
+    "user": "",
+    "password": "",
+    "database": "cleverlab_dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "pool": {
+      "min": 2,
+      "max": 10
+    }
+  },
+  "test": {
+    "user": "",
+    "password": "",
+    "database": "cleverlab_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "pool": {
+      "min": 2,
+      "max": 10
+    }
+  },
+  "production": {
+    "user": "",
+    "password": "",
+    "database": "cleverlab_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "pool": {
+      "min": 2,
+      "max": 10
+    }
+  }
+}
