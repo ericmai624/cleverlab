@@ -3,7 +3,7 @@ import next from 'next';
 import http from 'http';
 import io from './io';
 import graphqlHandler from './graphql';
-import { morgan, bodyParser } from './middleware';
+import { auth, bodyParser, morgan } from './middleware';
 import { graphiqlExpress } from 'apollo-server-express';
 
 const app = express();
@@ -25,7 +25,7 @@ nextApp.prepare()
     app.get('/', (req, res) => nextApp.render(req, res, '/', req.query));
 
     app.get('/signup', (req, res) => nextApp.render(req, res, '/signup', req.query)); 
-    
+        
     app.use('/graphql', graphqlHandler);
     app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
