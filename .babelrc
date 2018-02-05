@@ -17,7 +17,9 @@
         "root": ["."],
         "alias": {
           "styles": "./static/css",
-          "components": "./components"
+          "components": "./components",
+          "api": "./api",
+          "database": "./database"
         },
         "cwd": "babelrc"
     }],

@@ -1,10 +1,11 @@
-import student from './student';
 import { GraphQLObjectType } from 'graphql';
+
+import user from './user';
 
 const query = new GraphQLObjectType({
   name: 'Query',
   fields: {
-    student
+    user
   }
 });
 

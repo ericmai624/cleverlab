@@ -1,18 +1,9 @@
-export default (db, DataTypes) => {
-  const { ARRAY, STRING, INTEGER, DATE } = DataTypes;
+import mongoose from 'mongoose';
 
-  return db.define('Class', 
-    {
-      id: {
-        type: INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-      },
-      name: STRING,
-    },
-    {
-      indexes: []
-    }
-  );
+export default {
+  documentName: 'Class',
+  fields: new mongoose.Schema({
+    id: String,
+    name: String
+  })
 };

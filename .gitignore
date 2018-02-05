@@ -3,6 +3,7 @@ node_modules
 
 # db
 database/data
+database/config/config.js
 
 # build
 .next/

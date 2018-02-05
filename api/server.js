@@ -1,9 +1,10 @@
 import express from 'express';
 import next from 'next';
 import http from 'http';
-import createSocketIOServer from './io';
-import { morgan, bodyParser } from './middleware';
+import io from './io';
 import graphqlHandler from './graphql';
+import { morgan, bodyParser } from './middleware';
+import { graphiqlExpress } from 'apollo-server-express';
 
 const app = express();
 const server = http.Server(app);
@@ -13,7 +14,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const nextHandler = nextApp.getRequestHandler();
 
-createSocketIOServer(server); // create socket.io server
+io.attach(server);
 
 nextApp.prepare()
   .then(() => {
@@ -25,7 +26,8 @@ nextApp.prepare()
 
     app.get('/signup', (req, res) => nextApp.render(req, res, '/signup', req.query)); 
     
-    app.use('/graphql', graphqlHandler); // graphql endpoint
+    app.use('/graphql', graphqlHandler);
+    app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
     app.get('*', (req, res) => {
       return nextHandler(req, res);
