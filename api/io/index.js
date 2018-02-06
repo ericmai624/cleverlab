@@ -1,8 +1,10 @@
-const chalk = require('chalk');
+import chalk from 'chalk';
+import Server from 'socket.io';
 
-module.exports = server => {
-  const io = require('socket.io')(server);
-  io.on('connection', socket => {
-    console.log(chalk.white(`${socket.id} is connected`));
-  });
-};
+const io = new Server();
+
+io.on('connection', socket => {
+  console.log(chalk.white(`${socket.id} is connected`));
+});
+
+export default io;

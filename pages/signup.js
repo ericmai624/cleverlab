@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import withData from 'lib/withData';
+
 import Layout from 'components/layout/layout';
-/* shared styled-components */
 import { Flex, Button } from 'components/shared/styled-components';
 
 const SignupContainer = Flex.extend`
