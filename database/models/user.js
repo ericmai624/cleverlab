@@ -8,7 +8,8 @@ export default {
     {
       userType: {
         type: String,
-        required: true
+        required: true,
+        enum: ['student', 'teacher']
       },
       email: {
         type: String,
@@ -24,7 +25,7 @@ export default {
       lastName: String,
       isEmailVerified: Boolean,
       lastLogin: Date,
-      loginCounts: Number,
+      loginCounts: { type: Number, default: 0 },
       activeClasses: [ { type: Schema.Types.ObjectId, ref: 'Class' } ],
       archievedClasses: [ { type: Schema.Types.ObjectId, ref: 'Class' } ],
       resetPasswordExpires: Date,

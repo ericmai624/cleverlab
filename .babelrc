@@ -1,7 +1,7 @@
 {
   "presets": [
-    "next/babel",
-    "env" 
+    "env",
+    "next/babel"
   ],
   "plugins": [
     [ 
@@ -16,19 +16,14 @@
       "module-resolver", {
         "root": ["."],
         "alias": {
-          "styles": "./static/css",
+          "static": "./static",
           "components": "./components",
+          "lib": "./lib",
           "api": "./api",
           "database": "./database"
         },
         "cwd": "babelrc"
-    }],
-    [
-      "wrap-in-js",
-      {
-        "extensions": ["css$", "scss$"]
-      }
-    ]
+    }]
   ],
   "ignore": []
 }

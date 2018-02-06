@@ -9,7 +9,7 @@ import db from 'database';
 const dev = process.env.NODE_ENV !== 'production';
 const schema = new GraphQLSchema({ query, mutation });
 
-const graphqlHandler = graphqlExpress((req, res) => ({
+const graphqlHandler = graphqlExpress(req => ({
   schema,
   context: { req, db }
 }));

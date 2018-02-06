@@ -1,20 +1,23 @@
-import { GraphQLObjectType, GraphQLString, GraphQLNonNull } from 'graphql';
 import jwt from 'jsonwebtoken';
 import config from 'config';
-import Promise from 'bluebird';
+import util from 'util';
 
 import UserType from 'api/graphql/types/user';
 
 export default {
   type: UserType,
-  args: {
-    token: { type: new GraphQLNonNull(GraphQLString) }
-  },
-  resolve: async (parentValue, { token }, { req, db }) => {
-    Promise.promisifyAll(jwt);
+  args: {},
+  resolve: async (parentValue, {}, { req, db }) => {
+    const { jwtToken } = req.session;
+    
+    if (!jwtToken) return null;
+    
     const { secret } = config.jwt;
-    const { id } = await jwt.verifyAsync(token, secret);
+    const verify = util.promisify(jwt.verify);
+    const decoded = await verify(jwtToken, secret);
 
-    return db.User.findById(id);
+    if (!decoded || !decoded.viewerId) return null;
+
+    return db.User.findById(decoded.viewerId);
   }
 };

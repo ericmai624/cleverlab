@@ -1,8 +1,5 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-/* use module resolver to resolve /static/css to styles/ */
-import normalize from 'styles/normalize-min.css';
-import stylesheet from 'styles/main.css';
 
 class MyDocument extends Document {
 
@@ -22,8 +19,8 @@ class MyDocument extends Document {
       <html>
         <Head>
           <title>Cleverlab</title>
-          <style dangerouslySetInnerHTML={{ __html: normalize }} />
-          <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
+          <link rel='stylesheet' type='text/css' href='/static/css/normalize.css' />
+          <link rel='stylesheet' type='text/css' href='/static/css/main.css' />
           {styleTags}
         </Head>
         <body>

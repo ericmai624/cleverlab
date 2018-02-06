@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
+import withData from 'lib/withData';
 
 import Layout from 'components/layout/layout';
-
 import { Flex } from 'components/shared/styled-components';
 
 const Container = Flex.extend`
@@ -43,4 +43,4 @@ class Index extends Component {
   }
 }
 
-export default Index;
+export default withData(Index);
