@@ -1,4 +1,5 @@
 import { GraphQLString, GraphQLObjectType, GraphQLID, GraphQLBoolean, GraphQLInt } from 'graphql';
+import LocationType from './location';
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -8,10 +9,13 @@ const UserType = new GraphQLObjectType({
       resolve: user => user._id
     },
     firstName: { type: GraphQLString },
-    lastName: { type: GraphQLString },
+    familyName: { type: GraphQLString },
     email: { type: GraphQLString },
-    location: { type: GraphQLString },
     emailVerified: { type: GraphQLBoolean },
+    location: { 
+      type: LocationType,
+      description: 'where the user is located'
+    },
     userType: { 
       type: GraphQLString,
       description: 'defines whether a user is student or teacher' 

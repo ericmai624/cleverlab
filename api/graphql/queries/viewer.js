@@ -9,7 +9,7 @@ export default {
   args: {},
   resolve: async (parentValue, {}, { req, db }) => {
     const { jwtToken } = req.session;
-    
+
     if (!jwtToken) return null;
     
     const { secret } = config.jwt;

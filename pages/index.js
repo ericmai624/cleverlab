@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
+import PropTypes from 'prop-types';
 import withData from 'lib/withData';
+import getViewer from 'lib/getViewer';
 
 import Layout from 'components/layout/layout';
 import { Flex } from 'components/shared/styled-components';
 
 const Container = Flex.extend`
   width: 100%;
+  height: calc(100vh - 50px);
 `;
 
 class Index extends Component {
 
-  static async getInitialProps() {
+  static propTypes = {
+    viewer: PropTypes.object.isRequired
+  }
 
-    return {};
+  static async getInitialProps(context, apolloClient) {
+    const viewer = await getViewer(apolloClient) || {};
+
+    return { viewer };
   }
 
   componentDidMount() {
@@ -35,9 +43,11 @@ class Index extends Component {
   }
 
   render() {
+    const { viewer } = this.props;
+
     return (
       <Layout>
-        <span>hello world!</span>
+        <Container align='center' justify='center'>{`hello ${viewer.firstName || 'world'}`}</Container>
       </Layout>
     );
   }

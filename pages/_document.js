@@ -6,7 +6,7 @@ class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
     /* Server side render stylesheet with Styled-Components */
     const sheet = new ServerStyleSheet();
-    const page = renderPage(Page => props => sheet.collectStyles(<Page { ...props } />));
+    const page = renderPage(Page => props => sheet.collectStyles(<Page {...props} />));
     const styleTags = sheet.getStyleElement();
 
     return { ...page, styleTags };
@@ -19,8 +19,30 @@ class MyDocument extends Document {
       <html>
         <Head>
           <title>Cleverlab</title>
-          <link rel='stylesheet' type='text/css' href='/static/css/normalize.css' />
-          <link rel='stylesheet' type='text/css' href='/static/css/main.css' />
+          <style>{`
+            @font-face {
+              font-family: Roboto;
+              src: url(/static/fonts/Roboto-Regular.ttf);
+            }
+
+            @font-face {
+              font-family: Roboto;
+              src: url(/static/fonts/Roboto-Bold.ttf);
+              font-weight: bold;
+            }
+
+            @font-face {
+              font-family: Roboto;
+              src: url(/static/fonts/Roboto-Italic.ttf);
+              font-style: italic;
+            }
+
+            body {
+              font-family: Roboto, sans-serif;
+              margin: 0;
+            }
+          `}
+          </style>
           {styleTags}
         </Head>
         <body>
