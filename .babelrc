@@ -19,7 +19,7 @@
           "static": "./static",
           "components": "./components",
           "lib": "./lib",
-          "api": "./api",
+          "server": "./server",
           "database": "./database"
         },
         "cwd": "babelrc"

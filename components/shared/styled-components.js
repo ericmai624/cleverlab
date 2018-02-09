@@ -21,3 +21,18 @@ export const Button = styled.button`
   }
 `;
 
+export const HtmlLink = styled.a`
+  color: inherit;
+  text-decoration: none;
+`;
+
+export const Input = styled.input`
+  border: none;
+  outline: none;
+  background: transparent;
+
+  &:focus {
+    outline: none;
+  }
+`;
+

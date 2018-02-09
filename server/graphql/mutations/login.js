@@ -5,10 +5,10 @@ import util from 'util';
 import { isEmail, isLength } from 'validator';
 import { GraphQLString, GraphQLNonNull, GraphQLInputObjectType } from 'graphql';
 
-import UserType from 'api/graphql/types/user';
+import UserType from 'server/graphql/types/user';
 
-const logInInput = new GraphQLInputObjectType({
-  name: 'loginInput',
+const LoginInputType = new GraphQLInputObjectType({
+  name: 'LoginInput',
   description: 'email and password of the user trying to login',
   fields: {
     email: { type: new GraphQLNonNull(GraphQLString) },
@@ -19,7 +19,7 @@ const logInInput = new GraphQLInputObjectType({
 const login = {
   type: UserType,
   args: {
-    input: { type: new GraphQLNonNull(logInInput) }
+    input: { type: new GraphQLNonNull(LoginInputType) }
   },
   resolve: async (parentValue, { input }, { req, db }) => {
     const { email, password } = input;

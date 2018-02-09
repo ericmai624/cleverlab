@@ -6,7 +6,7 @@ class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
     /* Server side render stylesheet with Styled-Components */
     const sheet = new ServerStyleSheet();
-    const page = renderPage(Page => props => sheet.collectStyles(<Page { ...props } />));
+    const page = renderPage(Page => props => sheet.collectStyles(<Page {...props} />));
     const styleTags = sheet.getStyleElement();
 
     return { ...page, styleTags };
@@ -19,8 +19,7 @@ class MyDocument extends Document {
       <html>
         <Head>
           <title>Cleverlab</title>
-          <link rel='stylesheet' type='text/css' href='/static/css/normalize.css' />
-          <link rel='stylesheet' type='text/css' href='/static/css/main.css' />
+          <link rel='stylesheet' type='text/css' href='/static/css/styles.css' />
           {styleTags}
         </Head>
         <body>

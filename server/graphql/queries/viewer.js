@@ -2,14 +2,14 @@ import jwt from 'jsonwebtoken';
 import config from 'config';
 import util from 'util';
 
-import UserType from 'api/graphql/types/user';
+import UserType from 'server/graphql/types/user';
 
 export default {
   type: UserType,
   args: {},
   resolve: async (parentValue, {}, { req, db }) => {
     const { jwtToken } = req.session;
-    
+
     if (!jwtToken) return null;
     
     const { secret } = config.jwt;
