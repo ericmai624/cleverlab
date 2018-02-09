@@ -21,18 +21,23 @@ nextApp.prepare()
     app.use(middleware.bodyParser.json());
     app.use(middleware.bodyParser.urlencoded({ extended: true }));
     app.use(middleware.session);
-    app.use(middleware.morgan('dev'));
+    // app.use(middleware.morgan('dev'));
 
     /* redirect routes */
-    app.get('/signin', (req, res) => res.redirect(303, '/login'));
-    app.get('/signup', (req, res) => res.redirect(303, '/join'));
-    app.get('/logout', (req, res) => res.redirect(303, '/signout'));
+    const redirects = [
+      { from: '/signin', to: '/login' },
+      { from: '/signup', to: '/join' },
+      { from: '/signout', to: '/logout' },
+    ];
+
+    redirects.forEach(({ from, to, method = 'get', statusCode = 303 }) => 
+      app[method](from, (req, res) => res.redirect(statusCode, to)));
     
     /* data route */
     app.use('/graphql', graphqlHandler);
     app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-    app.get('/signout', (req, res) => req.session.destroy(res.redirect.bind(res, '/')));
+    app.get('/logout', (req, res) => req.session.destroy(res.redirect.bind(res, '/')));
 
     app.get('*', nextHandler);
 

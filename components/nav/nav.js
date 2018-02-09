@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+
 import { Flex, HtmlLink } from 'components/shared/styled-components';
 
 const NavWrapper = styled.nav`
@@ -30,7 +34,34 @@ const LinkWrapper = styled.div`
 `;
 
 class Nav extends Component {
+
+  static propTypes = {
+    viewer: PropTypes.object
+  }
+
   render() {
+    const { viewer } = this.props;
+
+    let auth = [
+      <LinkWrapper key='join'>
+        <Link href='/join' prefetch>
+          <HtmlLink>Join</HtmlLink>
+        </Link>
+      </LinkWrapper>,
+      <LinkWrapper key='login'>
+        <Link href='/login' prefetch>
+          <HtmlLink>Login</HtmlLink>
+        </Link>
+      </LinkWrapper>
+    ];
+    if (viewer && viewer.id) {
+      auth = (
+        <LinkWrapper>
+          <HtmlLink href='/signout'>Sign out</HtmlLink>
+        </LinkWrapper>
+      );
+    }
+
     return (
       <NavWrapper>
         <LinkWrapper>
@@ -39,18 +70,23 @@ class Nav extends Component {
           </Link>
         </LinkWrapper>
         <SignupAndSignOut align='center' justify='space-around'>
-          <LinkWrapper>
-            <Link href='/join' prefetch>
-              <HtmlLink>Join</HtmlLink>
-            </Link>
-          </LinkWrapper>
-          <LinkWrapper>
-            <HtmlLink href='/signout'>Sign out</HtmlLink>
-          </LinkWrapper>
+          {auth}
         </SignupAndSignOut>
       </NavWrapper>
     );
   }
 }
 
-export default Nav;
+const query = gql`
+  query checkLogin {
+    viewer {
+      id
+    }
+  }
+`;
+
+const mapQueryToProps = graphql(query, {
+  props: ({ data }) => ({ viewer: data.viewer })
+});
+
+export default mapQueryToProps(Nav);

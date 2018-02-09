@@ -5,7 +5,7 @@ import util from 'util';
 import { isEmail, isLength } from 'validator';
 import { GraphQLString, GraphQLNonNull, GraphQLInputObjectType } from 'graphql';
 
-import UserType from 'api/graphql/types/user';
+import UserType from 'server/graphql/types/user';
 
 const LoginInputType = new GraphQLInputObjectType({
   name: 'LoginInput',

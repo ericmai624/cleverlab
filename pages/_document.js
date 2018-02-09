@@ -19,30 +19,7 @@ class MyDocument extends Document {
       <html>
         <Head>
           <title>Cleverlab</title>
-          <style>{`
-            @font-face {
-              font-family: Roboto;
-              src: url(/static/fonts/Roboto-Regular.ttf);
-            }
-
-            @font-face {
-              font-family: Roboto;
-              src: url(/static/fonts/Roboto-Bold.ttf);
-              font-weight: bold;
-            }
-
-            @font-face {
-              font-family: Roboto;
-              src: url(/static/fonts/Roboto-Italic.ttf);
-              font-style: italic;
-            }
-
-            body {
-              font-family: Roboto, sans-serif;
-              margin: 0;
-            }
-          `}
-          </style>
+          <link rel='stylesheet' type='text/css' href='/static/css/styles.css' />
           {styleTags}
         </Head>
         <body>
