@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLNonNull } from 'graphql';
 
-import UserType from 'server/graphql/types/user';
+import UserType from 'api/graphql/types/user';
 
 export default {
   type: UserType,

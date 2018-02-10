@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import config from 'config';
 import util from 'util';
 
-import UserType from 'server/graphql/types/user';
+import UserType from 'api/graphql/types/user';
 
 export default {
   type: UserType,

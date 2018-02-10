@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { isEmail, isLength } from 'validator';
 import { GraphQLString, GraphQLNonNull, GraphQLInputObjectType } from 'graphql';
 
-import UserType from 'server/graphql/types/user';
+import UserType from 'api/graphql/types/user';
 
 const CreateUserInputType = new GraphQLInputObjectType({
   name: 'CreateUserInput',

@@ -2,12 +2,12 @@
   "name": "cleverlab",
   "version": "1.0.0",
   "description": "education platform",
-  "main": "server/",
+  "main": "api/",
   "author": "Eric Mai <enmai1988@gmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon --watch server --watch lib --watch database/ --ignore database/data",
+    "dev": "nodemon --watch api/ --watch lib --watch database/ --ignore database/data",
     "db": "mongod --dbpath database/data",
     "build": "next build",
     "start": "next start"
