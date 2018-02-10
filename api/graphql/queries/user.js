@@ -7,5 +7,5 @@ export default {
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) }
   },
-  resolve: async (parentValue, { email }, { req, db }) => await db.User.findOne({ email })
+  resolve: async (parentValue, { email }, { req }) => null
 };

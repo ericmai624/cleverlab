@@ -1,5 +1,7 @@
 {
   "jwt": { },
 
-  "redis": { }
+  "redis": { },
+
+  "profiledot": { }
 }

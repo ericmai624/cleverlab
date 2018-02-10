@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import config from 'config';
+import request from 'request-promise';
 import util from 'util';
 import { isEmail, isLength } from 'validator';
 import { GraphQLString, GraphQLNonNull, GraphQLInputObjectType } from 'graphql';
@@ -21,28 +22,30 @@ const login = {
   args: {
     input: { type: new GraphQLNonNull(LoginInputType) }
   },
-  resolve: async (parentValue, { input }, { req, db }) => {
-    const { email, password } = input;
+  resolve: async (parentValue, { input }, { req, requestOptions }) => {
+    let { email, password } = input;
 
     if (!isEmail(email)) throw new Error('Invalid email address');
     if (!isLength(password, { min: 6 })) throw new Error('Password must have at least 6 characters');
 
-    const sign = util.promisify(jwt.sign);
-    const user = await db.User.findOne({ email });
-    const { secret } = config.jwt;
+    let sign = util.promisify(jwt.sign);
+    let { uri, secret: profiledotSecret } = config.profiledot;
+    let { secret: cleverlabSecret } = config.jwt;
 
-    if (!user) throw new Error('Invalid email or user does not exist with email');
+    let token = await sign({ data: { email, password } }, profiledotSecret, { expiresIn: 300 });
+    let options = Object.assign({}, requestOptions);
+    options.headers = { Authorization: `Bearer ${token}` };
 
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    let response = await request.post(`${uri}/login`, options);
+    
+    let errorCodes = [403, 404];
+    if (errorCodes.includes(response.statusCode)) return null;
 
-    if (!isValidPassword) throw new Error('Incorrect password');
+    let viewer = JSON.parse(response.body);
 
-    user.lastLogin = Date.now();
-    user.loginCounts++;
+    req.session.owner = await sign({ data: { id: viewer._id } }, cleverlabSecret);
 
-    req.session.jwtToken = await sign({ viewerId: user.id }, secret);
-
-    return await user.save();
+    return viewer;
   }
 };
 

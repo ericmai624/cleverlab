@@ -7,8 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon --watch api/ --watch lib --watch database/ --ignore database/data",
-    "db": "mongod --dbpath database/data",
+    "dev": "nodemon --watch api/ --watch lib",
     "build": "next build",
     "start": "next start"
   },
@@ -44,6 +43,7 @@
     "react-dom": "^16.2.0",
     "redis": "^2.8.0",
     "redux": "^3.7.2",
+    "request-promise": "^4.2.2",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
     "styled-components": "^3.1.6",
