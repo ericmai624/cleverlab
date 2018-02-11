@@ -11,7 +11,7 @@ if (process.env.REDISTOGO_URL) {
   client = redis.createClient(rtg.port, rtg.hostname);
   client.auth(rtg.auth.split(':')[1]);
 } else {
-  client = redis.createClient(6379, config.host);
+  client = redis.createClient(6379, config.redis.host);
 }
 
 client.on('ready', () => console.log(chalk.bgGreen(chalk.black('Redis is ready to accept connections'))));

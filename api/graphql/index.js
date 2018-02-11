@@ -4,14 +4,19 @@ import { graphqlExpress } from 'apollo-server-express';
 
 import query from './queries';
 import mutation from './mutations';
-import db from 'database';
 
 const dev = process.env.NODE_ENV !== 'production';
 const schema = new GraphQLSchema({ query, mutation });
 
 const graphqlHandler = graphqlExpress(req => ({
   schema,
-  context: { req, db }
+  context: {
+    req,
+    requestOptions: {
+      resolveWithFullResponse: true,
+      simple: false
+    }
+  }
 }));
 
 export default graphqlHandler;

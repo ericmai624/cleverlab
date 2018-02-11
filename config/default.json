@@ -1,5 +1,7 @@
 {
-  "jwt": { },
+  "cleverlab": { },
 
-  "redis": { }
+  "redis": { },
+
+  "profiledot": { }
 }

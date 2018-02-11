@@ -21,7 +21,13 @@ nextApp.prepare()
     app.use(middleware.bodyParser.json());
     app.use(middleware.bodyParser.urlencoded({ extended: true }));
     app.use(middleware.session);
-    // app.use(middleware.morgan('dev'));
+    app.use(middleware.morgan('dev'));
+
+    const routes = [
+      { path: '/graphql', handler: graphqlHandler, method: 'use' },
+      { path: '/graphiql', handler: graphiqlExpress({ endpointURL: '/graphql' }), method: 'use' },
+      { path: '/logout', handler: (req, res) => req.session.destroy(res.redirect.bind(res, '/')) }
+    ];
 
     /* redirect routes */
     const redirects = [
@@ -30,16 +36,12 @@ nextApp.prepare()
       { from: '/signout', to: '/logout' },
     ];
 
+    routes.forEach(({ path, handler, method = 'get' }) => app[method](path, handler));
+
     redirects.forEach(({ from, to, method = 'get', statusCode = 303 }) => 
       app[method](from, (req, res) => res.redirect(statusCode, to)));
-    
-    /* data route */
-    app.use('/graphql', graphqlHandler);
-    app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-    app.get('/logout', (req, res) => req.session.destroy(res.redirect.bind(res, '/')));
-
-    app.get('*', nextHandler);
+    app.get('*', nextHandler); // keep this here, catch all pages not specified in routes and redirects
 
     server.listen(port, err => {
       if (err) throw err;

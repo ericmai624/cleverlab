@@ -1,8 +1,11 @@
-import bcrypt from 'bcrypt';
+import config from 'config';
+import request from 'request-promise';
+import jwt from 'jsonwebtoken';
+import util from 'util';
 import { isEmail, isLength } from 'validator';
 import { GraphQLString, GraphQLNonNull, GraphQLInputObjectType } from 'graphql';
 
-import UserType from 'server/graphql/types/user';
+import UserType from 'api/graphql/types/user';
 
 const CreateUserInputType = new GraphQLInputObjectType({
   name: 'CreateUserInput',
@@ -21,17 +24,25 @@ const createUser = {
   args: {
     input: { type: CreateUserInputType }
   },
-  resolve: async (parentValue, { input }, { req, db }) => {
+  resolve: async (_, { input }, { req }) => {
     console.log('Creating user with input: ', input);
     
-    const { firstName, familyName, email, password, userType } = input;
+    let { email, password, userType } = input;
 
     if (!isEmail(email)) throw new Error('Invalid email address');
     if (!isLength(password, { min: 6 })) throw new Error('Password must be 6 characters or more');
+    if (!userType) throw new Error('userType must be specified');
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    let { profiledot } = config;
+    let sign = util.promisify(jwt.sign);
 
-    return db.User.create({ firstName, familyName, email, password: hashedPassword, userType });
+    let token = await sign({ data: input }, profiledot.secret, { expiresIn: 300 });
+    
+    let response = await request.post(profiledot.uri, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    return JSON.parse(response);
   }
 };
 
