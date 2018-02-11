@@ -33,10 +33,13 @@ const createUser = {
     if (!isLength(password, { min: 6 })) throw new Error('Password must be 6 characters or more');
     if (!userType) throw new Error('userType must be specified');
 
-    let { uri, secret: profiledotSecret } = config.profiledot;
+    let { profiledot } = config;
     let sign = util.promisify(jwt.sign);
-    let response = await request.post(uri, {
-      headers: { Authorization: `Bearer ${await sign(input, profiledotSecret, { expiresIn: 300 })}` }
+
+    let token = await sign({ data: input }, profiledot.secret, { expiresIn: 300 });
+    
+    let response = await request.post(profiledot.uri, {
+      headers: { Authorization: `Bearer ${token}` }
     });
 
     return JSON.parse(response);

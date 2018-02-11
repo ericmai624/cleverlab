@@ -13,20 +13,20 @@ export default {
 
     if (!owner) return null;
     
-    let { secret } = config.jwt;
+    let { cleverlab, profiledot } = config;
     let sign = util.promisify(jwt.sign);
     let verify = util.promisify(jwt.verify);
-    let decoded = await verify(owner, secret);
+    let decoded = await verify(owner, cleverlab.secret);
 
     if (!decoded || !decoded.data || !decoded.data.id) return null;
 
-    let { uri, secret: profiledotSecret } = config.profiledot;
     let options = Object.assign({}, requestOptions);
-    options.headers = { Authorization: `Bearer ${await sign({ data: decoded.data }, profiledotSecret, { expiresIn: 300 })}` };
+    let token = await await sign({ data: decoded.data }, profiledot.secret, { expiresIn: 300 });
+    options.headers = { Authorization: `Bearer ${token}` };
 
-    let response = await request(uri, options);
-
-    if (response.statusCode === 406) return null;
+    let response = await request(profiledot.uri, options);
+    let errorCodes = [400, 404];
+    if (errorCodes.includes(response.statusCode)) return null;
 
     return JSON.parse(response.body);
   }

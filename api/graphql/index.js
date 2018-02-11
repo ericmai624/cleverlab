@@ -13,7 +13,6 @@ const graphqlHandler = graphqlExpress(req => ({
   context: {
     req,
     requestOptions: {
-      method: 'get',
       resolveWithFullResponse: true,
       simple: false
     }

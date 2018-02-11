@@ -29,21 +29,20 @@ const login = {
     if (!isLength(password, { min: 6 })) throw new Error('Password must have at least 6 characters');
 
     let sign = util.promisify(jwt.sign);
-    let { uri, secret: profiledotSecret } = config.profiledot;
-    let { secret: cleverlabSecret } = config.jwt;
+    let { cleverlab, profiledot } = config;
 
-    let token = await sign({ data: { email, password } }, profiledotSecret, { expiresIn: 300 });
+    let token = await sign({ data: { email, password } }, profiledot.secret, { expiresIn: 300 });
     let options = Object.assign({}, requestOptions);
     options.headers = { Authorization: `Bearer ${token}` };
 
-    let response = await request.post(`${uri}/login`, options);
+    let response = await request.post(`${profiledot.uri}/login`, options);
     
-    let errorCodes = [403, 404];
+    let errorCodes = [403, 404, 500];
     if (errorCodes.includes(response.statusCode)) return null;
 
     let viewer = JSON.parse(response.body);
 
-    req.session.owner = await sign({ data: { id: viewer._id } }, cleverlabSecret);
+    req.session.owner = await sign({ data: { id: viewer._id } }, cleverlab.secret);
 
     return viewer;
   }

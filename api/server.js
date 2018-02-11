@@ -21,7 +21,7 @@ nextApp.prepare()
     app.use(middleware.bodyParser.json());
     app.use(middleware.bodyParser.urlencoded({ extended: true }));
     app.use(middleware.session);
-    // app.use(middleware.morgan('dev'));
+    app.use(middleware.morgan('dev'));
 
     /* redirect routes */
     const redirects = [
