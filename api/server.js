@@ -3,6 +3,7 @@ import next from 'next';
 import io from './io';
 import graphqlHandler from './graphql';
 import * as middleware from './middleware';
+import createDebug from 'debug';
 import { Server } from 'http';
 import { graphiqlExpress } from 'apollo-server-express';
 
@@ -22,13 +23,12 @@ nextApp.prepare()
     app.use(middleware.bodyParser.urlencoded({ extended: true }));
     app.use(middleware.session);
     app.use(middleware.morgan('dev'));
-
+    
     const routes = [
       { path: '/graphql', handler: graphqlHandler, method: 'use' },
       { path: '/graphiql', handler: graphiqlExpress({ endpointURL: '/graphql' }), method: 'use' },
       { path: '/logout', handler: (req, res) => req.session.destroy(res.redirect.bind(res, '/')) }
     ];
-
     /* redirect routes */
     const redirects = [
       { from: '/signin', to: '/login' },
