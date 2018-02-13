@@ -42,7 +42,7 @@ const login = {
 
     let viewer = JSON.parse(response.body);
 
-    req.session.owner = await sign({ data: { id: viewer._id } }, cleverlab.secret);
+    req.session.owner = { id: viewer._id };
 
     return viewer;
   }

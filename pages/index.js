@@ -47,7 +47,7 @@ class Index extends Component {
 
     return (
       <Layout>
-        <Container align='center' justify='center'>{`hello ${viewer.firstName || 'world'}`}</Container>
+        <Container align='center' justify='center'>{`Hello ${viewer.firstName || 'world'}`}</Container>
       </Layout>
     );
   }
