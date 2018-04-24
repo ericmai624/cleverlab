@@ -25,7 +25,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    this.socket = io();
+    this.socket = io('http://localhost:8082', { query: { token: 'sometoken' } });
     this.registerSocketEventListeners(this.socket);
   }
 
